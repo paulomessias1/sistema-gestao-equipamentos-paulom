@@ -41,7 +41,7 @@ export const EquipmentName = styled.strong`
 export const EquipmentCode = styled.small`
   display: block;
   color: #6b7280;
-  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  font-family: inherit;
   font-size: 12px;
   line-height: 18px;
 `
