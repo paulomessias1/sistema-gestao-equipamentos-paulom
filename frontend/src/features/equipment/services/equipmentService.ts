@@ -1,4 +1,3 @@
-// AULA 07: descomente este import quando o service passar a chamar a API real.
 import { axiosApi } from '../../../services/api'
 import type {
   CreateEquipmentPayload,
@@ -21,14 +20,12 @@ export interface GetEquipmentListParams {
   pageSize?: number
 }
 
-// AULA 07: descomente este tipo auxiliar junto com a chamada GET /locations.
 interface ApiLocation {
   id: string
   code: string
   name: string
 }
 
-// AULA 07: descomente este bloco para trocar a tela sem dados por chamadas reais ao backend.
 export const equipmentService = {
   // Lista equipamentos com filtros e paginação; a API responde com { data, meta }.
   async getEquipmentList(params: GetEquipmentListParams = {}) {
@@ -103,7 +100,7 @@ export const equipmentService = {
       },
     )
 
-    return response.data.data.map<EquipmentLocationOption>((location) => ({
+    return response.data.data.map<EquipmentLocationOption>((location: ApiLocation) => ({
       id: location.id,
       label: `${location.code} - ${location.name}`,
     }))
