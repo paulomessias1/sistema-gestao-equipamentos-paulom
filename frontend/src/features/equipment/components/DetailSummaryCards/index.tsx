@@ -1,13 +1,19 @@
-import type { EquipmentDetailSummary } from '../../types/equipment'
 import { Description, Grid, Label, SummaryCard, Value } from './styles'
 
+export interface LocationDetailSummary {
+  id: string
+  title: string
+  value: number | string
+  description?: string
+}
+
 interface DetailSummaryCardsProps {
-  summaries: EquipmentDetailSummary[]
+  summaries: LocationDetailSummary[]
 }
 
 export function DetailSummaryCards({ summaries }: DetailSummaryCardsProps) {
   return (
-    <Grid aria-label="Resumo do equipamento">
+    <Grid aria-label="Resumo do local">
       {summaries.map((summary) => (
         <SummaryCard key={summary.id} styles={{ body: { padding: 16 } }}>
           <Label>{summary.title}</Label>
