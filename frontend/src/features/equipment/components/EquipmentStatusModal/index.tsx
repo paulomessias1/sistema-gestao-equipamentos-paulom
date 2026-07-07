@@ -1,44 +1,44 @@
 import { Form, Input, Select } from 'antd'
 import { useEffect } from 'react'
 import {
-  getLocationStatusLabel,
-  type LocationDetails,
-  type LocationStatus,
-} from '../../types/location'
+  getEquipmentStatusLabel,
+  type Equipment,
+  type EquipmentStatus,
+} from '../../types/equipment'
 import { CurrentStatusText, StatusModal } from './styles'
 
-export interface LocationStatusFormValues {
-  status: LocationStatus
+export interface EquipmentStatusFormValues {
+  status: EquipmentStatus
   note?: string
 }
 
-interface LocationStatusModalProps {
-  location?: LocationDetails
+interface EquipmentStatusModalProps {
+  equipment?: Equipment
   confirmLoading?: boolean
   open: boolean
-  statusOptions: LocationStatus[]
+  statusOptions: EquipmentStatus[]
   onCancel: () => void
-  onSubmit: (values: LocationStatusFormValues) => void
+  onSubmit: (values: EquipmentStatusFormValues) => void
 }
 
-export function LocationStatusModal({
-  location,
+export function EquipmentStatusModal({
+  equipment,
   confirmLoading,
   open,
   statusOptions,
   onCancel,
   onSubmit,
-}: LocationStatusModalProps) {
-  const [form] = Form.useForm<LocationStatusFormValues>()
+}: EquipmentStatusModalProps) {
+  const [form] = Form.useForm<EquipmentStatusFormValues>()
 
   useEffect(() => {
     if (open) {
       form.setFieldsValue({
-        status: location?.status,
+        status: equipment?.status,
         note: '',
       })
     }
-  }, [location, form, open])
+  }, [equipment, form, open])
 
   function handleSubmit() {
     form
@@ -50,41 +50,42 @@ export function LocationStatusModal({
   return (
     <StatusModal
       centered
-      destroyOnClose
+      destroyOnHidden
       open={open}
-      title="Alterar situação"
+      title="Alterar status"
       okText="Salvar"
       cancelText="Cancelar"
       confirmLoading={confirmLoading}
       width={480}
-      styles={{
-        mask: { backdropFilter: 'blur(2px)', background: 'rgb(0 0 0 / 45%)' },
+      maskStyle={{
+        backdropFilter: 'blur(2px)',
+        background: 'rgb(0 0 0 / 45%)',
       }}
       onCancel={onCancel}
       onOk={handleSubmit}
     >
       <Form form={form} layout="vertical">
         <Form.Item
-          label="Nova situação"
+          label="Novo status"
           name="status"
           rules={[{ required: true, message: 'Selecione o novo status.' }]}
         >
           <Select
-            placeholder="Selecione a situação..."
+            placeholder="Selecione o status..."
             options={statusOptions.map((status) => ({
-              label: getLocationStatusLabel(status),
+              label: getEquipmentStatusLabel(status),
               value: status,
             }))}
           />
         </Form.Item>
 
         <Form.Item label="Observação" name="note">
-          <Input.TextArea placeholder="Ex: Local fechado para reforma." />
+          <Input.TextArea placeholder="Ex: equipamento enviado para manutenção preventiva." />
         </Form.Item>
       </Form>
 
       <CurrentStatusText>
-        Situação atual: {location ? getLocationStatusLabel(location.status) : '-'}
+        Status atual: {equipment ? getEquipmentStatusLabel(equipment.status) : '-'}
       </CurrentStatusText>
     </StatusModal>
   )
